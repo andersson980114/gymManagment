@@ -1,0 +1,209 @@
+import React, { useState, useContext } from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { Container, Form, Button, Row, Col, Card, Toast } from 'react-bootstrap';
+
+import IUser from '../../interfaces/IUser'; 
+import { generos, options } from '../../utils';
+
+function Register() {
+  const { register, reset, handleSubmit, control,  formState: { errors },  } = useForm<IUser>();
+  
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState(''); 
+
+  const onSubmit:SubmitHandler<IUser> = async(data:IUser) => { 
+    console.log(data)
+   /*  const user= await addUser(data)
+    try {
+      if (user) {
+        reset();
+        setToastMessage('Usuario registrado');
+        setShowToast(true);
+      } else { 
+        setToastMessage('Error al registrar usuario');
+        setShowToast(true);
+      }
+      
+    } catch (error) {
+      console.log("error register user: ", error)
+    } */
+  };
+  
+  return (
+    <Container className="my-5 ">
+    <h1>Registro de Usuario</h1>
+    <Card className="mx-5">
+      <Card.Body className="my-3">
+        <Card.Title>
+          <h2>Datos del Usuario</h2>
+        </Card.Title>
+        <Card.Body className="my-3">
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <Row style={{ 'marginTop': '15px' }}>
+              <Col xs={6}>
+                <Form.Group>
+                  <Form.Label>Número de Identificación:</Form.Label>
+                  <input
+                    className="form-control" 
+                    type='number'
+                    {...register("document", { 
+                      required: 'Número de identificación requerido',
+                    })}
+                  />
+                  {errors.document && (
+                    <p style={{ color: 'red' }}>{errors.document.message}</p>
+                  )}
+                </Form.Group>
+              </Col>
+              <Col xs={6}>
+                <Form.Group>
+                  <Form.Label>Nombre Completo:</Form.Label>
+                  <input
+                    className="form-control"
+                    type="text"
+                    {...register("fullName", { required: 'Nombre completo requerido' })}
+                  />
+                  {errors.fullName && (
+                    <p style={{ color: 'red' }}>{errors.fullName.message}</p>
+                  )}
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row style={{ 'marginTop': '15px' }}>
+              <Col xs={6}>
+                <Form.Group>
+                  <Form.Label>Edad:</Form.Label>
+                  <input
+                    className="form-control"
+                    type='number'
+                    {...register("age", { required: 'Edad requerida' })}
+                  />
+                  {errors.age && (
+                    <p style={{ color: 'red' }}>{errors.age.message}</p>
+                  )}
+                </Form.Group>
+              </Col>
+              <Col xs={6}>
+                <Form.Group>
+                  <Form.Label>Género:</Form.Label>
+                  <select
+                    className="form-control"
+                    id="gender"
+                    {...register('gender', { required: 'Género requerido' })}
+                  >
+                    <option value="">Selecciona una opción</option>
+                    {generos.map((genero) => (
+                      <option key={genero.id} value={genero.value}>
+                        {genero.label}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.gender && (
+                    <p style={{ color: 'red' }}>{errors.gender.message}</p>
+                  )}
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row style={{ 'marginTop': '15px' }}>
+              <Col xs={6}>
+                <Form.Group>
+                  <Form.Label>Altura:</Form.Label>
+                  <input
+                    className="form-control"
+                    type='number'
+                    {...register("height", { required: 'Altura requerida' })}
+                  />
+                  {errors.height && (
+                    <p style={{ color: 'red' }}>{errors.height.message}</p>
+                  )}
+                </Form.Group>
+              </Col>
+              <Col xs={6}>
+                <Form.Group>
+                  <Form.Label>Peso:</Form.Label>
+                  <input
+                    className="form-control "
+                    type='number'
+                    inputMode="numeric"
+                    {...register("weight", { required: 'Peso requerido' })}
+                  />
+                  {errors.weight && (
+                    <p style={{ color: 'red' }}>{errors.weight.message}</p>
+                  )}
+                </Form.Group>
+              </Col>
+            </Row> 
+            <Row style={{ 'marginTop': '15px' }}>
+              <Col xs={6}>
+                <Form.Group>
+                  <Form.Label>Fecha de Inicio:</Form.Label>
+                  <input
+                    className="form-control"
+                    type="date"
+                    {...register("startDate", { required: 'Fecha de Inicio requerida' })}
+                  />
+                  {errors.startDate && (
+                    <p style={{ color: 'red' }}>{errors.startDate.message}</p>
+                  )}
+                </Form.Group>
+              </Col>
+              <Col xs={6}>
+                {/* <Form.Group>
+                  <Form.Label>Fecha de Fin:</Form.Label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    {...register("endDate", { required: 'Fecha de Fin requerida' })}
+                  />
+                  {errors.endDate && (
+                    <p style={{ color: 'red' }}>{errors.endDate.message}</p>
+                  )}
+                </Form.Group>
+                 */}
+
+                <Form.Group>
+                  <Form.Label>Fecha de Fin:</Form.Label>
+                  <select
+                    className="form-control"
+                    id="endDate"
+                    {...register('endDate', { required: 'Fecha de Fin requerida' })}
+                  >
+                    <option value="">Selecciona una opción</option>
+                    {options.map((option) => (
+                      <option key={option.id} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.endDate && (
+                      <p style={{ color: 'red' }}>{errors.endDate.message}</p>
+                  )}
+                </Form.Group>
+              </Col>
+            </Row>
+            <Button type="submit" style={{'marginTop':'15px'}}>Registrar Usuario</Button>
+          </Form>
+
+        </Card.Body>
+      </Card.Body>
+    </Card>
+        <Toast 
+          show={showToast} 
+          animation={true}
+          style={{
+            position: 'absolute',
+            top: 20,
+            right: 20,
+          }}
+          >
+            <Toast.Header> 
+              <strong className="me-auto">Estado del Registro</strong> 
+            </Toast.Header>
+            <Toast.Body>{toastMessage}</Toast.Body>
+          </Toast>
+           
+  </Container>
+  )
+}
+
+export default Register
