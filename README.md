@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="#"> 
-    <img  src="https://github.com/andersson980114/gymManagment/assets/70853111/82f0af7c-59c2-476a-9f89-6dfcb891b892" width="540">
+    <img  src="https://github.com/andersson980114/gymManagment/assets/70853111/82f0af7c-59c2-476a-9f89-6dfcb891b892" width="1024">
   </a>
 </p>
  
