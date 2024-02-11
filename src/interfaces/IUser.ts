@@ -6,7 +6,7 @@ export default interface IUser {
     height:    string;
     weight:    string;
     startDate: Date;
-    endDate:   Date| number;
+    endDate:   Date| number | string;
     __V?: any;
     _id: any;
 }

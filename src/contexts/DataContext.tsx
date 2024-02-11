@@ -31,11 +31,17 @@ export const DataContextProvider: React.FC<DataContextProviderProps> = ({ childr
 
   useEffect(() => {
     //  cargar los usuarios desde localStorage
+    getStorageUsers()
+  }, []);
+
+
+  const getStorageUsers =()=>{
     const storedUsers = localStorage.getItem('users');
     if (storedUsers) {
+      console.log(JSON.parse(storedUsers))
       setUsers(JSON.parse(storedUsers));
     }
-  }, []);
+  }
 
   const saveUsersToLocalStorage = (updatedUsers: IUser[]) => {
     localStorage.setItem('users', JSON.stringify(updatedUsers));
@@ -44,9 +50,20 @@ export const DataContextProvider: React.FC<DataContextProviderProps> = ({ childr
   const addUser = async (data: IUser) => {
     try {
       //  agregar un usuario
+      // Verificar si el usuario ya existe por su documento
+      const userExists = users.some((user) => user.document === data.document);
+
+      if (userExists) {
+        console.error('Usuario con el mismo documento ya existe');
+        return false;
+      }
+
+      // Agregar el nuevo usuario si no existe
       const updatedUsers = [...users, data];
       setUsers(updatedUsers);
       saveUsersToLocalStorage(updatedUsers);
+      getStorageUsers()
+      console.log(users)
       return true;
     } catch (error) {
       console.error('Error al agregar usuario:', error);

@@ -1,32 +1,50 @@
 import React, { useState, useContext } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Container, Form, Button, Row, Col, Card, Toast } from 'react-bootstrap';
-
+  
 import IUser from '../../interfaces/IUser'; 
 import { generos, options } from '../../utils';
+import { useDataContext } from '../../contexts/DataContext';
 
 function Register() {
   const { register, reset, handleSubmit, control,  formState: { errors },  } = useForm<IUser>();
-  
+  const {addUser} = useDataContext()
+
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState(''); 
 
+
   const onSubmit:SubmitHandler<IUser> = async(data:IUser) => { 
-    console.log(data)
-   /*  const user= await addUser(data)
-    try {
-      if (user) {
-        reset();
-        setToastMessage('Usuario registrado');
-        setShowToast(true);
-      } else { 
-        setToastMessage('Error al registrar usuario');
-        setShowToast(true);
-      }
-      
-    } catch (error) {
-      console.log("error register user: ", error)
-    } */
+    const { startDate, endDate } = data;
+    const endDateOption = Number(endDate);
+    const startDateObj = new Date(startDate); 
+    let newEndDate;
+    // Aplicar la lógica de sumar días, semanas o meses
+    switch (endDateOption) {
+      case 1:
+         // Sumar un día
+        newEndDate = new Date(startDateObj);
+        newEndDate.setDate(startDateObj.getDate() + 1);
+        break;
+      case 2:
+        // Sumar una semana
+        newEndDate = new Date(startDateObj);
+        newEndDate.setDate(startDateObj.getDate() + 8);
+        break;
+      default:
+        // Sumar un mes
+        newEndDate = new Date(startDateObj);
+        newEndDate.setMonth(startDateObj.getMonth() + 1);
+        break;
+    }
+  
+    // Asignar la nueva fecha a endDate
+    const formattedEndDate = newEndDate.toISOString().split('T')[0];
+    data.endDate = formattedEndDate  
+
+    console.log( data);
+    addUser(data)
+   
   };
   
   return (
