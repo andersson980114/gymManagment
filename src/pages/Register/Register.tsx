@@ -24,7 +24,6 @@ function Register() {
       case 1:
          // Sumar un día
         newEndDate = new Date(startDateObj);
-        newEndDate.setDate(startDateObj.getDate() + 1);
         break;
       case 2:
         // Sumar una semana
@@ -165,20 +164,7 @@ function Register() {
                   )}
                 </Form.Group>
               </Col>
-              <Col xs={6}>
-                {/* <Form.Group>
-                  <Form.Label>Fecha de Fin:</Form.Label>
-                  <input
-                    type="date"
-                    className="form-control"
-                    {...register("endDate", { required: 'Fecha de Fin requerida' })}
-                  />
-                  {errors.endDate && (
-                    <p style={{ color: 'red' }}>{errors.endDate.message}</p>
-                  )}
-                </Form.Group>
-                 */}
-
+              <Col xs={6}> 
                 <Form.Group>
                   <Form.Label>Fecha de Fin:</Form.Label>
                   <select

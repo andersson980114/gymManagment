@@ -6,6 +6,7 @@ interface DataContextProviderProps {
 }
 
 interface DataContextType {
+  users: IUser[] | null,
   addUser: (data: IUser) => Promise<boolean>,
   getAllUsers: () => Promise<IUser[]>,
   getUser: (document: string) => Promise<IUser | undefined>,
@@ -13,6 +14,7 @@ interface DataContextType {
 }
 
 export const INITIAL_STATE: DataContextType = {
+  users: null,
   addUser: async (data: IUser) => false,
   getAllUsers: async () => [],
   getUser: async (document: string) => undefined,
@@ -39,7 +41,7 @@ export const DataContextProvider: React.FC<DataContextProviderProps> = ({ childr
     const storedUsers = localStorage.getItem('users');
     if (storedUsers) {
       console.log(JSON.parse(storedUsers))
-      setUsers(JSON.parse(storedUsers));
+      setUsers(JSON.parse(storedUsers).reverse());
     }
   }
 
@@ -74,6 +76,7 @@ export const DataContextProvider: React.FC<DataContextProviderProps> = ({ childr
   const getAllUsers = async () => {
     try {
       //  obtener todos los usuarios
+      getStorageUsers()
       return users;
     } catch (error) {
       console.error('Error al obtener usuarios:', error);
@@ -108,6 +111,7 @@ export const DataContextProvider: React.FC<DataContextProviderProps> = ({ childr
   };
 
   const values: DataContextType = {
+    users,
     addUser,
     getAllUsers,
     getUser,

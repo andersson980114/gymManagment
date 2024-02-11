@@ -3,56 +3,12 @@ import { Container, Table, Badge, InputGroup, Form, Button } from 'react-bootstr
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleExclamation, faTriangleExclamation, faRotateRight, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import IUser from '../../interfaces/IUser';
+import { useDataContext } from '../../contexts/DataContext';
 
-const users: IUser[] = [
-  {
-    fullName: 'John Doe',
-    age: '30',
-    gender: 'Male',
-    document: '123456789',
-    height: '180',
-    weight: '75',
-    startDate: new Date('2022-01-01'),
-    endDate: new Date('2022-12-31'),
-    _id: '1',
-  },
-  {
-    fullName: 'Jane Doe',
-    age: '25',
-    gender: 'Female',
-    document: '987654321',
-    height: '165',
-    weight: '88',
-    startDate: new Date('2022-02-01'),
-    endDate: new Date('2022-11-30'),
-    _id: '2',
-  },
-  {
-    fullName: 'Andersson Cordoba',
-    age: '25',
-    gender: 'Male',
-    document: '123123123',
-    height: '165',
-    weight: '78',
-    startDate: new Date('2022-02-01'),
-    endDate: new Date('2022-11-30'),
-    _id: '3',
-  },
-  {
-    fullName: 'Jane Doe',
-    age: '25',
-    gender: 'Female',
-    document: '234234',
-    height: '176',
-    weight: '67',
-    startDate: new Date('2022-02-01'),
-    endDate: new Date('2022-11-30'),
-    _id: '4',
-  },
-];
-
+  
 function Home() {
-  const [searchData, setSearchData] = useState<IUser[]>([]);
+  const {getAllUsers, users} = useDataContext();
+  const [searchData, setSearchData] = useState<IUser[]>(users!);
   const [inputSearchData, setInputSearchData] = useState({ search: '' });
 
   const handleData = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,9 +18,9 @@ function Home() {
     });
 
     if (e.target.value === undefined || e.target.value === '') {
-      setSearchData([]);
+      setSearchData(users!);
     } else {
-      const dataCopy: IUser[] = users.filter((item) => {
+      const dataCopy: IUser[] = users!.filter((item) => {
         return (
           item.fullName.toLowerCase().includes(inputSearchData.search.toLowerCase()) ||
           item.document.toLowerCase().includes(inputSearchData.search.toLowerCase())
@@ -74,6 +30,23 @@ function Home() {
     }
   };
 
+  const getBadgeColor = (endDate: Date | number | string) => {
+    // Convertir endDate a un objeto Date
+    const endDateObj = new Date(endDate);
+    const currentDate = new Date();
+    const differenceInDays = Math.floor((endDateObj.getTime() - currentDate.getTime()) / (1000 * 3600 * 24));
+    console.log(endDateObj)
+    console.log(currentDate)
+    if (endDateObj < currentDate) {
+      return 'danger';
+    } else if (differenceInDays <= 5) {
+      return 'warning';
+    } else {
+      return 'success';
+    }
+    
+
+  };
   return (
     <Container className="text-center">
       <h1>LISTA DE USUARIOS</h1>
@@ -105,11 +78,11 @@ function Home() {
             <tr key={user._id}>
               <td>{user.document}</td>
               <td>{user.fullName}</td>
-              <td>{user.startDate.toLocaleDateString()}</td>
+              <td>{user.startDate.toString()}</td>
               <td>{user.endDate.toString()}</td>
               <td>
-                <Badge pill style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', fontSize: 15 }}>
-                  {/* Aquí puedes agregar la lógica para el estado */}
+                <Badge pill  bg={getBadgeColor(user.endDate)}>
+                {getBadgeColor(user.endDate) !== "danger" ? "Activo" : "Inactivo"}
                 </Badge>
               </td>
             </tr>
