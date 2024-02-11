@@ -40,7 +40,7 @@ export const DataContextProvider: React.FC<DataContextProviderProps> = ({ childr
   const getStorageUsers =()=>{
     const storedUsers = localStorage.getItem('users');
     if (storedUsers) {
-      console.log(JSON.parse(storedUsers))
+      //console.log(JSON.parse(storedUsers))
       setUsers(JSON.parse(storedUsers).reverse());
     }
   }
@@ -74,9 +74,9 @@ export const DataContextProvider: React.FC<DataContextProviderProps> = ({ childr
   };
 
   const getAllUsers = async () => {
+    getStorageUsers()
     try {
       //  obtener todos los usuarios
-      getStorageUsers()
       return users;
     } catch (error) {
       console.error('Error al obtener usuarios:', error);
@@ -84,9 +84,9 @@ export const DataContextProvider: React.FC<DataContextProviderProps> = ({ childr
     }
   };
 
-  const getUser = async (document: string) => {
+  const getUser = async (document: string): Promise<IUser | undefined> => {
     try {
-      //  obtener un usuario por documento
+      // obtener un usuario por documento
       const user = users.find((u) => u.document === document);
       return user;
     } catch (error) {

@@ -1,6 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { Container, Row, Col, Form, Button, Card, Modal} from 'react-bootstrap'; 
+import { useDataContext } from '../../contexts/DataContext';
+ 
 
 type FormData = {
   document: string;
@@ -9,17 +11,21 @@ type FormData = {
 const currentDate = new Date();
 
 function Index() {
+  const {getUser, updateUser} = useDataContext()
   const { control, handleSubmit, formState: { errors }, } = useForm<FormData>(); 
   const [userData, setUserData] = useState<any | null>(null);
   const [showModal, setShowModal] = useState(false);
   let document: string;
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {  
+  const onSubmit: SubmitHandler<FormData> = async (data) => {  
       if (data.document) {
           document= data.document
-          try {
-             /*  getUser(data.document)
-              setUserData(Validation); */
+          try { 
+              const user = await  getUser(data.document)
+              setUserData(user)
+              console.log(user)
+             
+              /* setUserData(Validation); */
           } catch (error) {
               console.log(error)
           }  
@@ -30,6 +36,13 @@ function Index() {
   const handleCloseModal = () => {
       setShowModal(false); 
   };
+
+  useEffect(() => {
+    if (userData && new Date(userData.endDate) <= currentDate) {
+        setShowModal(true); 
+    }
+}, [userData])
+
 
   return (
     <Container className='my-5'>
@@ -72,8 +85,8 @@ function Index() {
                   <Col xs={6}>
                       <Card.Text>Altura: {userData && userData.height} cm</Card.Text>
                       <Card.Text>Peso: {userData && userData.weight} kg</Card.Text>
-                      <Card.Text>Fecha de Inicio: {userData && new Date(userData.startDate).toLocaleDateString()}</Card.Text>
-                      <Card.Text>Fecha de Fin: {userData &&  new Date(userData.endDate).toLocaleDateString()}</Card.Text>
+                      <Card.Text>Fecha de Inicio: {userData &&  userData.startDate}</Card.Text>
+                      <Card.Text>Fecha de Fin: {userData &&  userData.endDate}</Card.Text>
                   </Col>
                   </Row>
               </Card.Body>

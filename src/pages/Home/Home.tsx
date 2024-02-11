@@ -35,8 +35,7 @@ function Home() {
     const endDateObj = new Date(endDate);
     const currentDate = new Date();
     const differenceInDays = Math.floor((endDateObj.getTime() - currentDate.getTime()) / (1000 * 3600 * 24));
-    console.log(endDateObj)
-    console.log(currentDate)
+    
     if (endDateObj < currentDate) {
       return 'danger';
     } else if (differenceInDays <= 5) {
@@ -75,7 +74,7 @@ function Home() {
         </thead>
         <tbody>
           {searchData.map((user) => (
-            <tr key={user._id}>
+            <tr key={user.document}>
               <td>{user.document}</td>
               <td>{user.fullName}</td>
               <td>{user.startDate.toString()}</td>
