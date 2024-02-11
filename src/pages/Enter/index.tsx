@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { Container, Row, Col, Form, Button, Card, Modal} from 'react-bootstrap'; 
 import { useDataContext } from '../../contexts/DataContext';
+import FormUpdateUser from '../../components/FormUpdateUser';
  
 
 type FormData = {
@@ -97,10 +98,10 @@ function Index() {
       </Card>
       <Modal show={showModal} onHide={() => setShowModal(false)}>
           <Modal.Header closeButton>
-            <Modal.Title>Actualizar Usuario</Modal.Title>
+            <Modal.Title>Actualizar usuario</Modal.Title>
           </Modal.Header>
           <Modal.Body> 
-
+            <FormUpdateUser onCloseModal={handleCloseModal}/>
           </Modal.Body>
       </Modal>
     

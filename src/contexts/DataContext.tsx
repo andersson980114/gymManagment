@@ -10,7 +10,7 @@ interface DataContextType {
   addUser: (data: IUser) => Promise<boolean>,
   getAllUsers: () => Promise<IUser[]>,
   getUser: (document: string) => Promise<IUser | undefined>,
-  updateUser: (document: string, date: Date) => Promise<boolean>,
+  updateUser: (document: string, date: string) => Promise<boolean>,
 }
 
 export const INITIAL_STATE: DataContextType = {
@@ -18,7 +18,7 @@ export const INITIAL_STATE: DataContextType = {
   addUser: async (data: IUser) => false,
   getAllUsers: async () => [],
   getUser: async (document: string) => undefined,
-  updateUser: async (document: string, date: Date) => false,
+  updateUser: async (document: string, date: string) => false,
 };
 
 export const DataContext = createContext(INITIAL_STATE);
@@ -95,7 +95,7 @@ export const DataContextProvider: React.FC<DataContextProviderProps> = ({ childr
     }
   };
 
-  const updateUser = async (document: string, date: Date) => {
+  const updateUser = async (document: string, date: string) => {
     try {
       //  actualizar un usuario por documento
       const updatedUsers = users.map((user) =>
