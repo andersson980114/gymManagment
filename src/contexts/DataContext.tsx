@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext, createContext, ReactNode } from 'react';
 import IUser from '../interfaces/IUser';
+import Swal from 'sweetalert2';
 
 interface DataContextProviderProps {
   children: ReactNode;
@@ -29,8 +30,12 @@ export function useDataContext() {
 
 export const DataContextProvider: React.FC<DataContextProviderProps> = ({ children }) => {
 
-  const [users, setUsers] = useState<IUser[]>([]);
-
+  const [users, setUsers] = useState<IUser[]>([]); 
+  const [alert, setAlert] = useState({
+    tittle: " ",
+    text: " ",
+    icon: "succes"
+  })
   useEffect(() => {
     //  cargar los usuarios desde localStorage
     getStorageUsers()
@@ -50,6 +55,7 @@ export const DataContextProvider: React.FC<DataContextProviderProps> = ({ childr
   };
 
   const addUser = async (data: IUser) => {
+    
     try {
       //  agregar un usuario
       // Verificar si el usuario ya existe por su documento
@@ -57,6 +63,11 @@ export const DataContextProvider: React.FC<DataContextProviderProps> = ({ childr
 
       if (userExists) {
         console.error('Usuario con el mismo documento ya existe');
+        Swal.fire({
+          title: "Usuario existente",
+          text: "Usuario con el mismo documento ya existe",
+          icon: "error"
+        })
         return false;
       }
 
@@ -66,11 +77,24 @@ export const DataContextProvider: React.FC<DataContextProviderProps> = ({ childr
       saveUsersToLocalStorage(updatedUsers);
       getStorageUsers()
       console.log(users)
+      Swal.fire({
+        title: "Usuario registrado",
+        text: "Usuario registrado con exito",
+        icon: "success"
+      })
+
       return true;
     } catch (error) {
       console.error('Error al agregar usuario:', error);
+      Swal.fire({
+        title: "Error",
+        text: "Error al agregar usuario",
+        icon: "warning"
+      })
       return false;
     }
+
+   
   };
 
   const getAllUsers = async () => {
@@ -91,6 +115,11 @@ export const DataContextProvider: React.FC<DataContextProviderProps> = ({ childr
       return user;
     } catch (error) {
       console.error('Error al obtener usuario:', error);
+      Swal.fire({
+        title: "Error",
+        text: "Error al obtener el usuario "+document,
+        icon: "error"
+      })
       return undefined;
     }
   };
@@ -103,9 +132,19 @@ export const DataContextProvider: React.FC<DataContextProviderProps> = ({ childr
       );
       setUsers(updatedUsers);
       saveUsersToLocalStorage(updatedUsers);
+      Swal.fire({
+        title: "Usuario actualizado",
+        text: "Usuario "+document+ " actualizado correctamente",
+        icon: "success"
+      })
       return true;
     } catch (error) {
       console.error('Error al actualizar usuario:', error);
+      Swal.fire({
+        title: "Error",
+        text: "Error al actualizar el usuario "+document,
+        icon: "error"
+      })
       return false;
     }
   };
