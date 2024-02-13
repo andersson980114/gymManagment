@@ -19,7 +19,7 @@
 - [Características](#Características)
 - [Instalaciones](#Instalaciones) 
 - [Ejecución](#Ejecución) 
-- [Prueba_Despliegue](#Prueba_Despliegue)
+- [Despliegue](#Despliegue)
 - [Vistas](#Vistas)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -64,12 +64,15 @@ $ npm start
 
 Esto iniciará la ejecución y nos mostrará nuestro sistema.
 
-## Prueba_Despliegue
+## Despliegue
 Para desplegarlo usé [Netlify](https://app.netlify.com//), que está enlazada con mis  repositorios de github, seleccioné el repositorio que queria subir, agregé las respectivas variables de entorno y lo desplegué.
 
 => Front desplegado: https://gymmanagmentan.netlify.app/
-=> usuerio: admin
+```bash
+=> usuario: admin
 => clave: admin123
+```
+
 
 ## Vistas
 <p align="center">
