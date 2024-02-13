@@ -1,6 +1,6 @@
-import { useState } from 'react';
+ 
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { Container, Form, Button, Row, Col, Card, Toast } from 'react-bootstrap';
+import { Container, Form, Button, Row, Col, Card } from 'react-bootstrap';
   
 import IUser from '../../interfaces/IUser'; 
 import { generos, options } from '../../utils';
