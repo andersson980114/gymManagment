@@ -67,7 +67,7 @@ Esto iniciará la ejecución y nos mostrará nuestro sistema.
 ## Prueba_Despliegue
 Para desplegarlo usé [Netlify](https://app.netlify.com//), que está enlazada con mis  repositorios de github, seleccioné el repositorio que queria subir, agregé las respectivas variables de entorno y lo desplegué.
 
-=> Front desplegado:  
+=> Front desplegado: https://gymmanagmentan.netlify.app/
 => usuerio: admin
 => clave: admin123
 
