@@ -1,13 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Container, Table, Badge, InputGroup, Form, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleExclamation, faTriangleExclamation, faRotateRight, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import IUser from '../../interfaces/IUser';
 import { useDataContext } from '../../contexts/DataContext';
 
   
 function Home() {
-  const {getAllUsers, users} = useDataContext();
+  const { users} = useDataContext();
   const [searchData, setSearchData] = useState<IUser[]>(users!);
   const [inputSearchData, setInputSearchData] = useState({ search: '' });
 

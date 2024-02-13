@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Container, Form, Button, Row, Col, Card, Toast } from 'react-bootstrap';
   
@@ -9,9 +9,7 @@ import { useDataContext } from '../../contexts/DataContext';
 function Register() {
   const { register, reset, handleSubmit,  formState: { errors },  } = useForm<IUser>();
   const {addUser} = useDataContext()
-
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState(''); 
+ 
 
 
   const onSubmit:SubmitHandler<IUser> = async(data:IUser) => { 
@@ -43,7 +41,7 @@ function Register() {
 
     console.log( data);
     addUser(data)
-   
+    reset()
   };
   
   return (
@@ -191,21 +189,7 @@ function Register() {
         </Card.Body>
       </Card.Body>
     </Card>
-        <Toast 
-          show={showToast} 
-          animation={true}
-          style={{
-            position: 'absolute',
-            top: 20,
-            right: 20,
-          }}
-          >
-            <Toast.Header> 
-              <strong className="me-auto">Estado del Registro</strong> 
-            </Toast.Header>
-            <Toast.Body>{toastMessage}</Toast.Body>
-          </Toast>
-           
+          
   </Container>
   )
 }
