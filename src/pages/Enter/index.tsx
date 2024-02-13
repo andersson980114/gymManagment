@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { Container, Row, Col, Form, Button, Card, Modal} from 'react-bootstrap'; 
 import { useDataContext } from '../../contexts/DataContext';
@@ -12,15 +12,14 @@ type FormData = {
 const currentDate = new Date();
 
 function Index() {
-  const {getUser, updateUser} = useDataContext()
+  const {getUser} = useDataContext()
   const { control, handleSubmit, formState: { errors }, } = useForm<FormData>(); 
   const [userData, setUserData] = useState<any | null>(null);
   const [showModal, setShowModal] = useState(false);
-  let document: string;
-
+  
   const onSubmit: SubmitHandler<FormData> = async (data) => {  
       if (data.document) {
-          document= data.document
+         
           try { 
               const user = await  getUser(data.document)
               setUserData(user)

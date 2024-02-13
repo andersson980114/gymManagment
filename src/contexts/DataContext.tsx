@@ -31,11 +31,7 @@ export function useDataContext() {
 export const DataContextProvider: React.FC<DataContextProviderProps> = ({ children }) => {
 
   const [users, setUsers] = useState<IUser[]>([]); 
-  const [alert, setAlert] = useState({
-    tittle: " ",
-    text: " ",
-    icon: "succes"
-  })
+   
   useEffect(() => {
     //  cargar los usuarios desde localStorage
     getStorageUsers()
@@ -92,8 +88,7 @@ export const DataContextProvider: React.FC<DataContextProviderProps> = ({ childr
         icon: "warning"
       })
       return false;
-    }
-
+    } 
    
   };
 

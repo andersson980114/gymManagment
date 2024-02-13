@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Container, Form, Button, Row, Col, Card, Toast } from 'react-bootstrap';
   
@@ -7,7 +7,7 @@ import { generos, options } from '../../utils';
 import { useDataContext } from '../../contexts/DataContext';
 
 function Register() {
-  const { register, reset, handleSubmit, control,  formState: { errors },  } = useForm<IUser>();
+  const { register, reset, handleSubmit,  formState: { errors },  } = useForm<IUser>();
   const {addUser} = useDataContext()
 
   const [showToast, setShowToast] = useState(false);

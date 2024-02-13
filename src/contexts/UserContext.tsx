@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useContext, createContext, ReactNode } from 'react'; 
-import IAdmin from '../interfaces/IAdmin';  
+import React, { useState, useEffect, useContext, createContext, ReactNode } from 'react';  
 import { ADMIN_STATE } from '../utils';
 
 

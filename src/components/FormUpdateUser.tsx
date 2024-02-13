@@ -1,6 +1,6 @@
-import React, { useState, useContext } from 'react';
+import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { Container, Form, Button, Row,  Card, Toast } from 'react-bootstrap';
+import { Container, Form, Button, Row,  Card } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import { useDataContext } from '../contexts/DataContext';
 import { options } from '../utils';
@@ -16,13 +16,13 @@ interface FormUpdateUserProps {
 
 const FormUpdateUser: React.FC<FormUpdateUserProps> = ({ onCloseModal }) => {
     let navigate = useNavigate();
-    const {updateUser, getUser} = useDataContext()
-    const { register, reset, handleSubmit, control,  formState: { errors },  } = useForm<updateUser>();
+    const {updateUser} = useDataContext()
+    const { register, reset, handleSubmit,  formState: { errors },  } = useForm<updateUser>();
    
     
 
     const onSubmit: SubmitHandler<updateUser> = async (data:updateUser) => { 
-        const { document, endDate } = data;
+        const { endDate } = data;
         const endDateOption = Number(endDate); 
         const today = new Date();
 
@@ -52,7 +52,7 @@ const FormUpdateUser: React.FC<FormUpdateUserProps> = ({ onCloseModal }) => {
             const user= await updateUser(data.document, formattedEndDate) 
 
             if (user) {
-                
+                navigate("/")
                 reset()
     
             } else { 

@@ -12,7 +12,7 @@ interface IFormData {
 }
 
 const Login = () => {
-  const { isLogin, Login, LogOut} = useUserContext()
+  const { Login } = useUserContext()
   const { handleSubmit, control, formState: { errors } } = useForm<IFormData>({
     defaultValues: {
       username: '',
