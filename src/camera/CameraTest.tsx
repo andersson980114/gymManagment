@@ -51,7 +51,7 @@ const CamerasTest: React.FC = () => {
       <Webcam audio={false} videoConstraints={{ ...videoConstraints, facingMode: 'user' }} />
       {url && (
         <div>
-          <img src={url} alt="photo" />
+          <img src={url} alt="" />
         </div>
       )}
     </>
